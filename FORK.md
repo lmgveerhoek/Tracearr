@@ -17,4 +17,4 @@ A fork of [connorgallopo/Tracearr](https://github.com/connorgallopo/Tracearr) th
 ## Staying current
 
 - `git fetch upstream && git rebase upstream/main` on `feat/aiostreams-source`. The touchpoints outside `aiostreams/` are small and type-level, so conflicts stay trivial.
-- `.github/workflows/fork-aiostreams-image.yml` builds `ghcr.io/lmgveerhoek/tracearr:aiostreams` (arm64, all-in-one image) on every push to the branch. GeoIP comes from MaxMind when a `MAXMIND_LICENSE_KEY` secret is set, otherwise from DB-IP Lite (CC BY 4.0, IP geolocation by [DB-IP](https://db-ip.com)).
+- `.github/workflows/fork-aiostreams-image.yml` builds `ghcr.io/lmgveerhoek/tracearr:aiostreams` (all-in-one image, amd64 and arm64, each built natively) on every push to the branch. GeoIP comes from MaxMind when a `MAXMIND_LICENSE_KEY` secret is set, otherwise from DB-IP Lite (CC BY 4.0, IP geolocation by [DB-IP](https://db-ip.com)).

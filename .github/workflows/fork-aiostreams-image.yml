@@ -21,6 +21,27 @@ jobs:
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch basemap
+        uses: ./.github/actions/fetch-basemap
+      - name: Fetch GeoIP (MaxMind)
+        if: env.MAXMIND_LICENSE_KEY != ''
+        uses: ./.github/actions/fetch-geoip
+        with:
+          license-key: ${{ secrets.MAXMIND_LICENSE_KEY }}
+        env:
+          MAXMIND_LICENSE_KEY: ${{ secrets.MAXMIND_LICENSE_KEY }}
+      # Without a MaxMind key: DB-IP Lite, the same MMDB layout as GeoLite2
+      # City/ASN, free under CC BY 4.0 (https://db-ip.com).
+      - name: Fetch GeoIP (DB-IP Lite)
+        if: env.MAXMIND_LICENSE_KEY == ''
+        env:
+          MAXMIND_LICENSE_KEY: ${{ secrets.MAXMIND_LICENSE_KEY }}
+        run: |
+          set -euo pipefail
+          month=$(date -u +%Y-%m)
+          curl -fsSL "https://download.db-ip.com/free/dbip-city-lite-${month}.mmdb.gz" | gunzip > data/GeoLite2-City.mmdb
+          curl -fsSL "https://download.db-ip.com/free/dbip-asn-lite-${month}.mmdb.gz" | gunzip > data/GeoLite2-ASN.mmdb
+          ls -la data/*.mmdb
       - uses: docker/setup-buildx-action@v3
       - uses: docker/login-action@v3
         with:

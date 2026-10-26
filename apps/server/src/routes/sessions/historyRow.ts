@@ -89,7 +89,7 @@ export function mapHistoryRow(row: HistoryRow) {
     server: {
       id: row.server_id,
       name: row.server_name,
-      type: row.server_type as 'plex' | 'jellyfin' | 'emby',
+      type: row.server_type as 'plex' | 'jellyfin' | 'emby' | 'aiostreams',
     },
     sessionKey: row.session_key,
     state: row.state,

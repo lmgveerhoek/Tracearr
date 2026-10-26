@@ -71,7 +71,7 @@ export interface SSEManagerEvents {
 interface ServerConnection {
   serverId: string;
   serverName: string;
-  serverType: 'plex' | 'jellyfin' | 'emby';
+  serverType: 'plex' | 'jellyfin' | 'emby' | 'aiostreams';
   // Kept for the plugin-list probe when the SSE endpoint 404s
   url: string;
   token: string;
@@ -229,10 +229,13 @@ export class SSEManager extends EventEmitter {
   async addServer(
     serverId: string,
     serverName: string,
-    serverType: 'plex' | 'jellyfin' | 'emby',
+    serverType: 'plex' | 'jellyfin' | 'emby' | 'aiostreams',
     url: string,
     token: string
   ): Promise<void> {
+    // AIOStreams has no realtime event stream; untracked servers stay in
+    // fallback, so the poller covers it.
+    if (serverType === 'aiostreams') return;
     if (this.pendingOperations.has(serverId)) {
       console.log(`[SSEManager] Operation already in progress for ${serverName}, skipping`);
       return;
@@ -531,7 +534,7 @@ export class SSEManager extends EventEmitter {
   private buildConnectionStatus(
     serverId: string,
     serverName: string,
-    serverType: 'plex' | 'jellyfin' | 'emby',
+    serverType: 'plex' | 'jellyfin' | 'emby' | 'aiostreams',
     status: SSEConnectionStatus
   ): ServerConnectionStatus {
     const state = status.state;
@@ -698,6 +701,7 @@ export class SSEManager extends EventEmitter {
     this.pluginProbesInFlight.add(serverId);
 
     const { url, token, serverType } = connection;
+    if (serverType === 'aiostreams') return;
     void probeSsePlugin({ baseUrl: url, serverType, token })
       .then((issue) => {
         const current = this.connections.get(serverId);

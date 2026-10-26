@@ -379,6 +379,8 @@ const IMAGE_PATH_ALLOWLIST: Record<(typeof servers.$inferSelect)['type'], RegExp
   plex: /^\/library\/metadata\/[^/?#]+\/thumb\/[^/?#]+$/,
   jellyfin: /^\/(Items|Users)\/[^/?#]+\/Images\/Primary(\?tag=[^&#]+)?$/,
   emby: /^\/(Items|Users)\/[^/?#]+\/Images\/Primary(\?tag=[^&#]+)?$/,
+  // AIOStreams sessions carry no server-side artwork to proxy.
+  aiostreams: /(?!)/,
 };
 
 export function buildUpstreamRequest(

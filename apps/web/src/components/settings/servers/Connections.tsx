@@ -68,7 +68,7 @@ export function Connections() {
   const [historicalId, setHistoricalId] = useState<string | null>(null);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [editServer, setEditServer] = useState<Server | null>(null);
-  const [serverType, setServerType] = useState<'plex' | 'jellyfin' | 'emby'>('plex');
+  const [serverType, setServerType] = useState<'plex' | 'jellyfin' | 'emby' | 'aiostreams'>('plex');
   const [serverUrl, setServerUrl] = useState('');
   const [publicUrl, setPublicUrl] = useState('');
   const [serverName, setServerName] = useState('');

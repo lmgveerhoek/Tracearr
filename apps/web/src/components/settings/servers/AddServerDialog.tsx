@@ -37,8 +37,8 @@ export interface AddServerDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   isOwner: boolean;
-  serverType: 'plex' | 'jellyfin' | 'emby';
-  onServerTypeChange: (type: 'plex' | 'jellyfin' | 'emby') => void;
+  serverType: 'plex' | 'jellyfin' | 'emby' | 'aiostreams';
+  onServerTypeChange: (type: 'plex' | 'jellyfin' | 'emby' | 'aiostreams') => void;
   serverUrl: string;
   onServerUrlChange: (value: string) => void;
   publicUrl: string;
@@ -143,7 +143,9 @@ export function AddServerDialog({
             <FieldLabel htmlFor="server-type">{t('servers.serverType')}</FieldLabel>
             <Select
               value={serverType}
-              onValueChange={(v) => onServerTypeChange(v as 'plex' | 'jellyfin' | 'emby')}
+              onValueChange={(v) =>
+                onServerTypeChange(v as 'plex' | 'jellyfin' | 'emby' | 'aiostreams')
+              }
             >
               <SelectTrigger id="server-type" className="w-full">
                 <SelectValue />
@@ -152,6 +154,7 @@ export function AddServerDialog({
                 {isOwner && <SelectItem value="plex">Plex</SelectItem>}
                 <SelectItem value="jellyfin">Jellyfin</SelectItem>
                 <SelectItem value="emby">Emby</SelectItem>
+                <SelectItem value="aiostreams">AIOStreams</SelectItem>
               </SelectContent>
             </Select>
           </Field>

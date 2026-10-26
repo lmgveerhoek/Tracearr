@@ -19,7 +19,12 @@ import { db } from '../db/client.js';
 import { servers, plexAccounts, serverUsers, users } from '../db/schema.js';
 import { nonOwnerMayLoginThrough } from '../lib/authGuards.js';
 import { revokeUnlessStillIn } from '../lib/revoke.js';
-import { PlexClient, JellyfinClient, EmbyClient } from '../services/mediaServer/index.js';
+import {
+  PlexClient,
+  JellyfinClient,
+  EmbyClient,
+  AIOStreamsClient,
+} from '../services/mediaServer/index.js';
 import { getServerLiveStats, getServerResourceStats } from '../services/serverLiveStats.js';
 import { syncServer } from '../services/sync.js';
 import { sseManager } from '../services/sseManager.js';
@@ -185,6 +190,17 @@ export const serverRoutes: FastifyPluginAsync = async (app) => {
             return reply.serviceUnavailable(adminCheck.message);
           }
           if (adminCheck.code === EmbyClient.AdminVerifyError.INVALID_KEY) {
+            return reply.badRequest(adminCheck.message);
+          }
+          return reply.forbidden(adminCheck.message);
+        }
+      } else if (type === 'aiostreams') {
+        const adminCheck = await AIOStreamsClient.verifyServerAdmin(token, url);
+        if (!adminCheck.success) {
+          if (adminCheck.code === AIOStreamsClient.AdminVerifyError.CONNECTION_FAILED) {
+            return reply.serviceUnavailable(adminCheck.message);
+          }
+          if (adminCheck.code === AIOStreamsClient.AdminVerifyError.INVALID_KEY) {
             return reply.badRequest(adminCheck.message);
           }
           return reply.forbidden(adminCheck.message);
@@ -395,6 +411,17 @@ export const serverRoutes: FastifyPluginAsync = async (app) => {
               return reply.serviceUnavailable(adminCheck.message);
             }
             if (adminCheck.code === EmbyClient.AdminVerifyError.INVALID_KEY) {
+              return reply.badRequest(adminCheck.message);
+            }
+            return reply.forbidden(adminCheck.message);
+          }
+        } else if (server.type === 'aiostreams') {
+          const adminCheck = await AIOStreamsClient.verifyServerAdmin(token, targetUrl);
+          if (!adminCheck.success) {
+            if (adminCheck.code === AIOStreamsClient.AdminVerifyError.CONNECTION_FAILED) {
+              return reply.serviceUnavailable(adminCheck.message);
+            }
+            if (adminCheck.code === AIOStreamsClient.AdminVerifyError.INVALID_KEY) {
               return reply.badRequest(adminCheck.message);
             }
             return reply.forbidden(adminCheck.message);

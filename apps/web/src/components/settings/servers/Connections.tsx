@@ -202,16 +202,27 @@ export function Connections() {
     setConnectError(null);
 
     try {
-      const connectFn =
-        serverType === 'jellyfin'
-          ? api.auth.connectJellyfinWithApiKey
-          : api.auth.connectEmbyWithApiKey;
-      await connectFn({
-        serverUrl,
-        serverName,
-        apiKey,
-        ...(publicUrl.trim() ? { publicUrl: publicUrl.trim() } : {}),
-      });
+      if (serverType === 'aiostreams' || serverType === 'nuvio') {
+        // Fork sources have no owner-login flow; the generic route verifies them.
+        await api.servers.create({
+          name: serverName,
+          type: serverType,
+          url: serverUrl,
+          token: apiKey,
+          ...(publicUrl.trim() ? { publicUrl: publicUrl.trim() } : {}),
+        });
+      } else {
+        const connectFn =
+          serverType === 'jellyfin'
+            ? api.auth.connectJellyfinWithApiKey
+            : api.auth.connectEmbyWithApiKey;
+        await connectFn({
+          serverUrl,
+          serverName,
+          apiKey,
+          ...(publicUrl.trim() ? { publicUrl: publicUrl.trim() } : {}),
+        });
+      }
       await refetchUser();
       await refetch();
       setShowAddDialog(false);

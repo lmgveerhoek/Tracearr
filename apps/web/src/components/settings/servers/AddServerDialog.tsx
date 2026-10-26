@@ -251,9 +251,17 @@ export function AddServerDialog({
                   onChange={(e) => onServerUrlChange(e.target.value)}
                 />
                 <FieldDescription>
-                  {serverType === 'jellyfin'
-                    ? t('servers.serverUrlHelpJellyfin')
-                    : t('servers.serverUrlHelpEmby')}
+                  {serverType === 'aiostreams'
+                    ? t('servers.serverUrlHelpAiostreams', {
+                        defaultValue: 'The AIOStreams URL, e.g. http://aiostreams:3000',
+                      })
+                    : serverType === 'nuvio'
+                      ? t('servers.serverUrlHelpNuvio', {
+                          defaultValue: 'The URL of the roster service, e.g. http://portal:8080',
+                        })
+                      : serverType === 'jellyfin'
+                        ? t('servers.serverUrlHelpJellyfin')
+                        : t('servers.serverUrlHelpEmby')}
                 </FieldDescription>
               </Field>
 
@@ -288,9 +296,17 @@ export function AddServerDialog({
                   onChange={(e) => onApiKeyChange(e.target.value)}
                 />
                 <FieldDescription>
-                  {serverType === 'jellyfin'
-                    ? t('servers.apiKeyHelpJellyfin')
-                    : t('servers.apiKeyHelpEmby')}
+                  {serverType === 'aiostreams'
+                    ? t('servers.apiKeyHelpAiostreams', {
+                        defaultValue: 'An admin login from AIOSTREAMS_AUTH, as username:password',
+                      })
+                    : serverType === 'nuvio'
+                      ? t('servers.apiKeyHelpNuvio', {
+                          defaultValue: 'The roster bearer token',
+                        })
+                      : serverType === 'jellyfin'
+                        ? t('servers.apiKeyHelpJellyfin')
+                        : t('servers.apiKeyHelpEmby')}
                 </FieldDescription>
               </Field>
 

@@ -24,6 +24,7 @@ import {
   JellyfinClient,
   EmbyClient,
   AIOStreamsClient,
+  NuvioClient,
 } from '../services/mediaServer/index.js';
 import { getServerLiveStats, getServerResourceStats } from '../services/serverLiveStats.js';
 import { syncServer } from '../services/sync.js';
@@ -193,6 +194,14 @@ export const serverRoutes: FastifyPluginAsync = async (app) => {
             return reply.badRequest(adminCheck.message);
           }
           return reply.forbidden(adminCheck.message);
+        }
+      } else if (type === 'nuvio') {
+        const adminCheck = await NuvioClient.verifyServerAdmin(token, url);
+        if (!adminCheck.success) {
+          if (adminCheck.code === NuvioClient.AdminVerifyError.CONNECTION_FAILED) {
+            return reply.serviceUnavailable(adminCheck.message);
+          }
+          return reply.badRequest(adminCheck.message);
         }
       } else if (type === 'aiostreams') {
         const adminCheck = await AIOStreamsClient.verifyServerAdmin(token, url);
@@ -414,6 +423,14 @@ export const serverRoutes: FastifyPluginAsync = async (app) => {
               return reply.badRequest(adminCheck.message);
             }
             return reply.forbidden(adminCheck.message);
+          }
+        } else if (server.type === 'nuvio') {
+          const adminCheck = await NuvioClient.verifyServerAdmin(token, targetUrl);
+          if (!adminCheck.success) {
+            if (adminCheck.code === NuvioClient.AdminVerifyError.CONNECTION_FAILED) {
+              return reply.serviceUnavailable(adminCheck.message);
+            }
+            return reply.badRequest(adminCheck.message);
           }
         } else if (server.type === 'aiostreams') {
           const adminCheck = await AIOStreamsClient.verifyServerAdmin(token, targetUrl);

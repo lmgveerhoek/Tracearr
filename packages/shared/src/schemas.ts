@@ -12,7 +12,7 @@ import { PLAYBACK_DECISIONS } from './playbackDecision.js';
 // ============================================================================
 
 /** Server types supported by Tracearr */
-const SERVER_TYPES = ['plex', 'jellyfin', 'emby', 'aiostreams'] as const;
+const SERVER_TYPES = ['plex', 'jellyfin', 'emby', 'aiostreams', 'nuvio'] as const;
 export const serverTypeSchema = z.enum(SERVER_TYPES);
 export type ServerType = z.infer<typeof serverTypeSchema>;
 

@@ -27,7 +27,7 @@ interface ItemRow {
   id: string;
   rating_key: string;
   server_id: string;
-  server_type: 'plex' | 'jellyfin' | 'emby' | 'aiostreams';
+  server_type: 'plex' | 'jellyfin' | 'emby' | 'aiostreams' | 'nuvio';
   server_url: string;
   server_token: string;
   server_historical_at: string | null;

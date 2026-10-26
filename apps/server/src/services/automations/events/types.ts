@@ -22,7 +22,7 @@ export type TriggerType =
 export interface EvaluationServer {
   id: string;
   name: string;
-  type: 'plex' | 'jellyfin' | 'emby' | 'aiostreams';
+  type: 'plex' | 'jellyfin' | 'emby' | 'aiostreams' | 'nuvio';
 }
 
 /** What every producer already holds about the account; matches SessionCreationInput['serverUser']. */

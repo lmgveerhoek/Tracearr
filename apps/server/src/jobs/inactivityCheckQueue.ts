@@ -196,7 +196,7 @@ interface CandidateRow {
   createdAt: Date;
   serverId: string;
   serverName: string;
-  serverType: 'plex' | 'jellyfin' | 'emby' | 'aiostreams';
+  serverType: 'plex' | 'jellyfin' | 'emby' | 'aiostreams' | 'nuvio';
 }
 
 /** The trigger's own threshold, so an automation only ever sees accounts idle long enough for it. */

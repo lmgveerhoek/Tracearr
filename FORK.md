@@ -1,12 +1,13 @@
 # lmgveerhoek/Tracearr
 
-A fork of [connorgallopo/Tracearr](https://github.com/connorgallopo/Tracearr) that adds **AIOStreams** as a media server source, for the Flixvoornix homelab.
+A fork of [connorgallopo/Tracearr](https://github.com/connorgallopo/Tracearr) that adds **AIOStreams** and **Nuvio** as media server sources, for the Flixvoornix homelab.
 
 ## What it adds
 
 - `apps/server/src/services/mediaServer/aiostreams/`: an `IMediaServerClient` over AIOStreams' admin dashboard API (`/api/v1/dashboard/streams/*`): live sessions with user, client IP, release, bytes and speed; users derived from session history; session kill.
-- Server type `aiostreams` (type-only widening where the code spelled out `'plex' | 'jellyfin' | 'emby'`; no behavior change for those). AIOStreams has no realtime events, libraries or requests: it is always polled, and those features skip it.
-- Add it under Settings → Servers → AIOStreams with the AIOStreams URL and `username:password` of an AIOStreams admin (`AIOSTREAMS_AUTH`).
+- `apps/server/src/services/mediaServer/nuvio/`: a group of Nuvio accounts read through their own sync data (`sync_pull_profiles`, `sync_pull_watch_progress`, `sync_pull_watched_items` on Nuvio's backend). The logins come from a roster endpoint (`GET <url>/internal/nuvio-roster`, bearer token = the server token), in Flixvoornix the onboarding portal. A title counts as playing while its progress was updated in the last 3 minutes and is unfinished; titles come from Cinemeta. Watch history imports finished titles. Nuvio sync has no client IP or device, and playback cannot be stopped.
+- Server types `aiostreams` and `nuvio` (type-only widening where the code spelled out `'plex' | 'jellyfin' | 'emby'`; no behavior change for those). AIOStreams has no realtime events, libraries or requests: it is always polled, and those features skip it.
+- Add AIOStreams under Settings → Servers with the AIOStreams URL and `username:password` of an AIOStreams admin (`AIOSTREAMS_AUTH`); add Nuvio with the roster provider's base URL and its roster token.
 
 ## Limits
 

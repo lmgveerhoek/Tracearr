@@ -136,7 +136,7 @@ const PLAY_SEMANTICS =
   '(COALESCE(duration_ms, 0) >= 120000 OR watched), including a chain that crosses UTC ' +
   'midnight. Rating keys the media server never provided are returned as null.';
 
-const ServerTypeEnum = z.enum(['plex', 'jellyfin', 'emby', 'aiostreams']);
+const ServerTypeEnum = z.enum(['plex', 'jellyfin', 'emby', 'aiostreams', 'nuvio']);
 const MediaTypeEnum = z.enum(['movie', 'episode', 'track', 'live', 'photo', 'trailer', 'unknown']);
 const TranscodeDecisionEnum = z.enum(['directplay', 'copy', 'transcode']);
 const ActiveStateEnum = z.enum(['playing', 'paused']).openapi({

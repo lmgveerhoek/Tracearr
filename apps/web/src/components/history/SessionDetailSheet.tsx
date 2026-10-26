@@ -83,6 +83,7 @@ const SERVER_CONFIG: Record<ServerType, { label: string; color: string }> = {
   jellyfin: { label: 'Jellyfin', color: 'text-purple-500' },
   emby: { label: 'Emby', color: 'text-green-500' },
   aiostreams: { label: 'AIOStreams', color: 'text-sky-500' },
+  nuvio: { label: 'Nuvio', color: 'text-indigo-500' },
 };
 
 const STATE_CONFIG = {

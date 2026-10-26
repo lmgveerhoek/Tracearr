@@ -169,7 +169,7 @@ async function upsertAll(
 ): Promise<number> {
   const serverType = (await serverTypeById(row.serverId)) ?? 'plex';
   // Media requests (Seerr) resolve against a real library; AIOStreams has none.
-  if (serverType === 'aiostreams') return 0;
+  if (serverType === 'aiostreams' || serverType === 'nuvio') return 0;
   const alreadyTitled = await remoteIdsWithStoredTitle(row.id);
   let upserted = 0;
   for (let i = 0; i < remote.length; i += PAGE_SIZE) {

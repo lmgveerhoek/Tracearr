@@ -21,6 +21,7 @@ import { PlexClient } from './plex/client.js';
 import { JellyfinClient } from './jellyfin/client.js';
 import { EmbyClient } from './emby/client.js';
 import { AIOStreamsClient } from './aiostreams/client.js';
+import { NuvioClient } from './nuvio/client.js';
 import type {
   IMediaServerClient,
   IMediaServerClientWithHistory,
@@ -66,6 +67,8 @@ export function createMediaServerClient(options: CreateClientOptions): IMediaSer
       return new EmbyClient(config);
     case 'aiostreams':
       return new AIOStreamsClient(config);
+    case 'nuvio':
+      return new NuvioClient(config);
     default:
       throw new Error(`Unknown media server type: ${options.type as string}`);
   }
@@ -105,6 +108,7 @@ export { PlexClient } from './plex/client.js';
 export { JellyfinClient } from './jellyfin/client.js';
 export { EmbyClient } from './emby/client.js';
 export { AIOStreamsClient } from './aiostreams/client.js';
+export { NuvioClient } from './nuvio/client.js';
 
 // Plex-specific types
 export type { PlexServerResource, PlexServerConnection } from './plex/parser.js';

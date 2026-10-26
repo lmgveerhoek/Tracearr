@@ -381,6 +381,7 @@ const IMAGE_PATH_ALLOWLIST: Record<(typeof servers.$inferSelect)['type'], RegExp
   emby: /^\/(Items|Users)\/[^/?#]+\/Images\/Primary(\?tag=[^&#]+)?$/,
   // AIOStreams sessions carry no server-side artwork to proxy.
   aiostreams: /(?!)/,
+  nuvio: /(?!)/,
 };
 
 export function buildUpstreamRequest(

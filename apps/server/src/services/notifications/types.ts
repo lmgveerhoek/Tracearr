@@ -59,7 +59,7 @@ export interface SessionContext {
 export interface ServerContext {
   type: 'server_down' | 'server_up';
   serverName: string;
-  serverType?: 'plex' | 'jellyfin' | 'emby' | 'aiostreams';
+  serverType?: 'plex' | 'jellyfin' | 'emby' | 'aiostreams' | 'nuvio';
 }
 
 /**
@@ -226,7 +226,7 @@ export const PayloadBuilders = {
 
   fromServerDown(
     serverName: string,
-    serverType?: 'plex' | 'jellyfin' | 'emby' | 'aiostreams'
+    serverType?: 'plex' | 'jellyfin' | 'emby' | 'aiostreams' | 'nuvio'
   ): NotificationPayload {
     return {
       event: 'server_down',
@@ -240,7 +240,7 @@ export const PayloadBuilders = {
 
   fromServerUp(
     serverName: string,
-    serverType?: 'plex' | 'jellyfin' | 'emby' | 'aiostreams'
+    serverType?: 'plex' | 'jellyfin' | 'emby' | 'aiostreams' | 'nuvio'
   ): NotificationPayload {
     return {
       event: 'server_up',

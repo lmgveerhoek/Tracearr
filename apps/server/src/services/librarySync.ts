@@ -2358,7 +2358,7 @@ export class LibrarySyncService {
   private async getServer(serverId: string): Promise<{
     id: string;
     name: string;
-    type: 'plex' | 'jellyfin' | 'emby' | 'aiostreams';
+    type: 'plex' | 'jellyfin' | 'emby' | 'aiostreams' | 'nuvio';
     url: string;
     token: string;
   } | null> {

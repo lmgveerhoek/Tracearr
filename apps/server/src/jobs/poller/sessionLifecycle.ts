@@ -165,7 +165,7 @@ export interface BuildActiveSessionInput {
   server: {
     id: string;
     name: string;
-    type: 'plex' | 'jellyfin' | 'emby' | 'aiostreams';
+    type: 'plex' | 'jellyfin' | 'emby' | 'aiostreams' | 'nuvio';
   };
 
   /** Optional overrides for update scenarios */

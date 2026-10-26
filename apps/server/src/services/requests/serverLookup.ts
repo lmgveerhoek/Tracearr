@@ -4,7 +4,7 @@ import { servers } from '../../db/schema.js';
 
 export async function findServerByMachineId(
   machineId: string
-): Promise<{ id: string; type: 'plex' | 'jellyfin' | 'emby' | 'aiostreams' } | null> {
+): Promise<{ id: string; type: 'plex' | 'jellyfin' | 'emby' | 'aiostreams' | 'nuvio' } | null> {
   const rows = await db
     .select({ id: servers.id, type: servers.type })
     .from(servers)
@@ -15,7 +15,7 @@ export async function findServerByMachineId(
 
 export async function serverTypeById(
   id: string
-): Promise<'plex' | 'jellyfin' | 'emby' | 'aiostreams' | null> {
+): Promise<'plex' | 'jellyfin' | 'emby' | 'aiostreams' | 'nuvio' | null> {
   const rows = await db
     .select({ type: servers.type })
     .from(servers)

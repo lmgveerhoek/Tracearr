@@ -192,6 +192,6 @@ describe('AIOStreamsClient', () => {
 
   it('has no libraries', async () => {
     expect(await client().getLibraries()).toEqual([]);
-    expect(await client().getLibraryItems()).toEqual({ items: [], totalCount: 0 });
+    expect(await client().getLibraryItems('none')).toEqual({ items: [], totalCount: 0 });
   });
 });
